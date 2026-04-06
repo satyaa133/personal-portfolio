@@ -499,13 +499,21 @@ main {
   scroll-snap-align: start;
 }
 
+.clients-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .clients-item img {
-  width: 100%;
-  filter: grayscale(1);
+  width: 130px;
+  filter: invert(1) brightness(0.6);
   transition: var(--transition-1);
 }
 
-.clients-item img:hover { filter: grayscale(0); }
+.clients-item img:hover {
+  filter: invert(1) brightness(1.2) sepia(0.4) saturate(2) hue-rotate(-15deg);
+}
 
 .article-title { margin-bottom: 30px; }
 
@@ -661,6 +669,7 @@ main {
   grid-template-columns: 1fr;
   gap: 30px;
   margin-bottom: 10px;
+  justify-items: center;
 }
 
 .project-item { display: none; }
@@ -668,6 +677,8 @@ main {
 .project-item.active {
   display: block;
   animation: scaleUp 0.25s ease forwards;
+  width: 100%;
+  max-width: 300px;
 }
 
 @keyframes scaleUp {
@@ -680,7 +691,7 @@ main {
 .project-img {
   position: relative;
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 15px;
@@ -724,7 +735,8 @@ main {
 
 .project-item-icon-box ion-icon { --ionicon-stroke-width: 50px; }
 
-.project-img img {
+.project-img img,
+.project-img video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1273,3 +1285,99 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+
+/**
+ * #VIDEO MODAL
+ */
+
+.video-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-1);
+}
+
+.video-modal-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-modal {
+  position: relative;
+  width: 95%;
+  max-width: 800px;
+  max-height: 90vh;
+  background: var(--eerie-black-2);
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: var(--shadow-3);
+  transform: scale(0.8);
+  transition: var(--transition-1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-modal-container.active .video-modal { transform: scale(1); }
+
+.video-modal video,
+.video-modal iframe {
+  width: 100%;
+  max-height: 85vh;
+  border-radius: 15px;
+  display: block;
+  object-fit: contain;
+}
+
+.video-modal iframe {
+  aspect-ratio: 16 / 9;
+  display: none;
+}
+
+.video-modal.youtube video { display: none; }
+.video-modal.youtube iframe { display: block; }
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--onyx);
+  color: var(--white-1);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: var(--shadow-2);
+  transition: var(--transition-1);
+  z-index: 10;
+  opacity: 0.8;
+}
+
+.modal-close-btn:hover {
+  background: var(--vegas-gold);
+  color: var(--smoky-black);
+  opacity: 1;
+}
+
+.modal-close-btn ion-icon { --ionicon-stroke-width: 50px; }
+
+.project-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-1);
+}
+
+.project-item > a:hover video { transform: scale(1.1); }
